@@ -33,6 +33,13 @@ namespace AdvertApi.Services {
             return dbModel.Id;
         }
 
+        public async Task<bool> CheckHealthAsync() {  
+            using (var client = new AmazonDynamoDBClient()) {
+                var tableData = await client.DescribeTableAsync("Adverts");
+                return string.Compare(tableData.Table.TableStatus, "active", true) == 0;
+            }
+        }
+
         public async Task ConfirmAsync(ConfirmAdvertModel model) {
             using (var client = new AmazonDynamoDBClient()) {
                 using (var context = new DynamoDBContext(client)) {

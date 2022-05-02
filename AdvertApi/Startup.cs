@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AdvertApi.Services;
+using AdvertApi.HealthChecks;
 
 namespace AdvertApi {
     public class Startup {
@@ -25,6 +26,9 @@ namespace AdvertApi {
         public void ConfigureServices(IServiceCollection services) {
             services.AddAutoMapper(typeof(Startup));
             services.AddTransient<IAdvertStorageService, DynamoDBAdvertStorage>();
+
+            services.AddHealthChecks().AddCheck<StorageHealthCheck>("Storage");
+            ;
 
             services.AddControllers();
             services.AddSwaggerGen(c => {
@@ -41,6 +45,8 @@ namespace AdvertApi {
             }
 
             app.UseRouting();
+
+            app.UseHealthChecks("/health");
 
             app.UseAuthorization();
 
