@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using AdvertApi.Services;
 
 namespace AdvertApi {
     public class Startup {
@@ -21,6 +23,8 @@ namespace AdvertApi {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
+            services.AddAutoMapper(typeof(Startup));
+            services.AddTransient<IAdvertStorageService, DynamoDBAdvertStorage>();
 
             services.AddControllers();
             services.AddSwaggerGen(c => {
