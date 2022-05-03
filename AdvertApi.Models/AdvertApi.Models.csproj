@@ -6,7 +6,7 @@
     <Company>None</Company>
     <Authors>John C.</Authors>
     <PackageProjectUrl>https://github.com/John-Cassidy/AWSDotNetWebAdvert.AdvertApi</PackageProjectUrl>
-    <PackageId>AWSDotNetWebAdvert.AdvertApi.Models</PackageId>
+    <PackageId>Jpcassidy.AWSDotNetWebAdvert.AdvertApi.Models</PackageId>
   </PropertyGroup>
 
 </Project>
