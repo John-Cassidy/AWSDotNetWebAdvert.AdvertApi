@@ -7,6 +7,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using AdvertApi.Models;
+using Amazon.SimpleNotificationService;
+using AdvertApi.Models.Messages;
+using System.Text.Json;
 
 namespace AdvertApi.Controllers {
     [Route("api/v1/[controller]")]
@@ -45,7 +48,7 @@ namespace AdvertApi.Controllers {
         public async Task<IActionResult> Confirm(ConfirmAdvertModel model) {
         try {
                 await _advertStorageService.ConfirmAsync(model);
-                
+                await RaiseAdvertConfirmedMessage(model);                
         } catch(KeyNotFoundException) {
                 return new NotFoundResult();
         } catch(Exception ex) {
@@ -54,5 +57,19 @@ namespace AdvertApi.Controllers {
             return new OkResult();
         }
 
+        private async Task RaiseAdvertConfirmedMessage(ConfirmAdvertModel model) {
+            var topicArn = Configuration.GetValue<string>("AWS:TopicArn");
+            var dbModel = await _advertStorageService.GetByIdAsync(model.Id);
+
+            using (var client = new AmazonSimpleNotificationServiceClient()) {
+                var message = new AdvertConfirmedMessage {
+                    Id = model.Id,
+                    Title = dbModel.Title
+                };
+
+                var messageJson = JsonSerializer.Serialize(message);
+                await client.PublishAsync(topicArn, messageJson);
+            }
+        }
     }
 }

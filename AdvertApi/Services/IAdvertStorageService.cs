@@ -13,6 +13,8 @@ namespace AdvertApi.Services
 
         Task ConfirmAsync(ConfirmAdvertModel model);
 
+        Task<AdvertModel> GetByIdAsync(string id);
+
         Task<bool> CheckHealthAsync();
     }
 }
