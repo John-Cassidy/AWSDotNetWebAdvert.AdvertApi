@@ -1,12 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Product>AWSDotNet Web Advert Microservices</Product>
     <Company>None</Company>
     <Authors>John C.</Authors>
     <PackageProjectUrl>https://github.com/John-Cassidy/AWSDotNetWebAdvert.AdvertApi</PackageProjectUrl>
     <PackageId>Jpcassidy.AWSDotNetWebAdvert.AdvertApi.Models</PackageId>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
 </Project>
