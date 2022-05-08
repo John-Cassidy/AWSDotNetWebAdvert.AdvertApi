@@ -57,13 +57,13 @@ namespace AdvertApi.Services {
         }
 
         public async Task<AdvertModel> GetByIdAsync(string id) {
-            //using (var client = new AmazonDynamoDBClient()) {
-            //    using (var context = new DynamoDBContext(client)) {
-            //        var dbModel = await context.LoadAsync<AdvertDbModel>(id);
-            //        if (dbModel != null)
-            //            return _mapper.Map<AdvertModel>(dbModel);
-            //    }
-            //}
+            using (var client = new AmazonDynamoDBClient()) {
+                using (var context = new DynamoDBContext(client)) {
+                    var dbModel = await context.LoadAsync<Advert>(id);
+                    if (dbModel != null)
+                        return _mapper.Map<AdvertModel>(dbModel);
+                }
+            }
 
             throw new KeyNotFoundException();
         }
